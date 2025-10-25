@@ -5,14 +5,19 @@ from database import session, engine
 import database_models
 from sqlalchemy.exc import OperationalError
 from sqlalchemy.orm import Session
+import os
 
 app = FastAPI()
+
+allowed_origins = os.getenv("ALLOWED_ORIGINS","http://localhost:3000").split(",")
 
 # CORS middleware setup
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Adjust as needed for production
-    allow_methods = ["*"],
+    allow_origins=allowed_origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 @app.on_event("startup")
@@ -27,7 +32,7 @@ def on_startup():
 
 @app.get("/")
 def func():
-    return "Hello, World!"
+    return {"message": "Inventory Management System"}
 
 # In-memory sample products (ids as ints to match Pydantic model)
 products = [
