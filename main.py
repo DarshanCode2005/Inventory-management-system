@@ -25,9 +25,16 @@ def on_startup():
     # Create tables at startup. Wrap in try/except so app can still run if DB is unreachable.
     try:
         database_models.Base.metadata.create_all(bind=engine)
+        print("Tables created successfully")
+        
+        # Initialize database with sample data
+        init_db()
+        
     except OperationalError as e:
         # Log the error to console; in production use proper logging
         print("Warning: could not create tables on startup:", e)
+    except Exception as e:
+        print("Warning: could not initialize database:", e)
 
 
 @app.get("/")
@@ -50,18 +57,23 @@ def get_db():
         db.close()
 
 def init_db():
-    db = session()
-    count = db.query(database_models.Product).count()
-    # what count is returing here
+    try:
+        db = session()
+        count = db.query(database_models.Product).count()
+        print(f"Current product count: {count}")
 
-
-    if count == 0:
-        for product in products:
-            db.add(database_models.Product(**product.model_dump()))
-
-    db.commit()
-
-init_db()
+        if count == 0:
+            print("Initializing database with sample products...")
+            for product in products:
+                db.add(database_models.Product(**product.model_dump()))
+            db.commit()
+            print("Sample products added successfully")
+        else:
+            print("Database already has products, skipping initialization")
+    except Exception as e:
+        print(f"Error initializing database: {e}")
+        if 'db' in locals():
+            db.rollback()
 
 @app.get("/products")
 def get_products(db: Session = Depends(get_db)):
