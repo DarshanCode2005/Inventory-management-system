@@ -1,10 +1,9 @@
 import React, { useEffect, useState, useMemo } from "react";
 import axios from "axios";
 import "./App.css";
-import TaglineSection from "./TaglineSection";
 
 const api = axios.create({
-  baseURL: "http://localhost:8000",
+  baseURL: process.env.REACT_APP_API_URL || "http://localhost:8000",
 });
 
 function App() {
@@ -199,7 +198,7 @@ function App() {
       <header className="topbar">
         <div className="brand">
           <span className="brand-badge">📦</span>
-          <h1>Telusko Trac</h1>
+          <h1>Inventory Manager</h1>
         </div>
         <div className="top-actions">
           <button className="btn btn-light" onClick={fetchProducts} disabled={loading}>
@@ -290,8 +289,6 @@ function App() {
             {error && <div className="error-msg">{error}</div>}
           </div>
           
-          <TaglineSection />
-
           <div className="card list-card">
             <h2>Products</h2>
             {loading ? (

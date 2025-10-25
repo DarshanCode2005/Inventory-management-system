@@ -19,7 +19,7 @@ if not database_url:
     db_name = os.getenv("DB_NAME", "fastapiproj")
     
     db_password_quoted = quote_plus(db_password)
-    database_url = f"postgresql://{db_user}:{db_password_quoted}@{db_host}:{db_port}/{db_name}"
+    database_url = os.getenv("DATABASE_URL",f"postgresql://{db_user}:{db_password_quoted}@{db_host}:{db_port}/{db_name}")
 
 # Handle Render's postgres:// URL (needs to be postgresql://)
 if database_url and database_url.startswith("postgres://"):
