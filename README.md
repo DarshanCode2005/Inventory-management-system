@@ -5,6 +5,9 @@ A full-stack inventory management application built with FastAPI backend and Rea
 ## 🚀 Live Demo
 
 - **Website**: [https://inventory-management-system-fronten-phi.vercel.app](https://inventory-management-system-fronten-phi.vercel.app)
+<img width="1900" height="913" alt="{DBCB25A8-E9E0-4633-BA6E-6272BDB3B5E2}" src="https://github.com/user-attachments/assets/44ca76a4-4f82-463b-a6a4-c3cfb4ccc97a" />
+
+[▶️ Watch Demo](https://drive.google.com/file/d/1vXo81e0vE2yz5u37-XJnnhH8Z3xw5o9Z/view?usp=sharing)
 
 ## 📋 Features
 
